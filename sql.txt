@@ -1,0 +1,112 @@
+create table BookDetailsOne(BookAuthor char(45),BookName char(50),BookType char(20),BookPages int(4),BookPrice double(6,2),BookID int(4));
+desc BookDetailsOne;
+insert into BookDetailsOne(BookAuthor,BookName,BookType,BookPages,BookPrice,BookID)
+values("ajay","GOT","fantacy",500,234.56,101),("sai","Kingfisher","action",672,345.63,102);
+select * from BookDetailsOne;
+insert into BookDetailsOne(BookAuthor,BookName,BookType,BookPages,BookPrice,BookID)
+values("Rbond","Time stops at shamli","Story",56,18.90,1786),("ypk","C Fundamental","Technical",56,555.55,1216),("Pallhavi Joshi","No time","Fiction",56,109.90,4321);
+commit;
+insert into BookDetailsOne(BookAuthor,BookName,BookType,BookPages,BookPrice,BookID)
+values("ypk","C++ Fundamental","Technical",56,276.00,1111),("Pallhavi Joshi","Out of box","Fiction",56,78.21,3434),("ypk","C Fundamental","Non Fiction",56,55.89,1412);
+select BookAuthor,BookName from BookDetailsOne where BookType='story';
+select BookName from BookDetailsOne where BookPrice<109;
+select count(*) from BookDetailsOne where BookAuthor='ypk';
+select * from BookDetailsOne where BookID != 102;
+select BookName from BookDetailsOne where BookPrice between 55.89 and 276;
+select * from BookDetailsOne where BookID not in (101,102);
+select * from BookDetailsOne where BookType in ("Technical"); 
+select * from bookDetailsOne where BookName like "G%";
+SELECT CONCAT(BookAuthor, ' *** ', BookName, '***', BookID) AS BookDetails
+FROM BookDetailsOne;
+select * from BookDetailsOne limit 5;
+select count(*) from BookDetailsOne where BookAuthor = 'ypk' or BookAuthor='sai';
+/*
+select count(*) from BookDetailsOne where BookAuthor in ('ypk','sai');
+*/
+SET SQL_SAFE_UPDATES = 0;
+select * from BookDetailsOne order by BookPrice desc;
+
+update BookDetailsOne set BookPrice = (BookPrice * (10/100) + BookPrice) where BookAuthor = 'ypk';
+select * from BookDetailsOne where BookAuthor='ypk';
+SET SQL_SAFE_UPDATES = 1;
+select sum(BookPrice) from BookDetailsOne where BookPrice not in(109.90,18.90);
+select * from BookDetailsOne where BookAuthor='ypk' order by BookPrice;
+select count(*) from BookDetailsOne where BookName not in('GOT','C Fundamental');
+SET SQL_SAFE_UPDATES = 0;
+UPDATE BookDetailsOne SET BookName = 'Twised games' WHERE BookID = 1421 AND BookAuthor = 'ypk';
+select * from BookDetailsOne;
+UPDATE BookDetailsOne SET BookName = 'New Book', BookType='non-fiction' WHERE BookID = 1216 AND BookAuthor = 'ypk';
+UPDATE BookDetailsOne SET BookName = 'C++ Fundamental', BookType='Technical' WHERE BookID = 1111 AND BookAuthor = 'ypk';
+update BookDetailsOne set BookAuthor = 'Ana Huang' where BookID = 1412;
+alter table BookDetailsOne add column DOP date;
+UPDATE BookDetailsOne
+SET DOP = CASE WHEN BookID = 101 THEN '2011-12-01' WHEN BookID = 102 THEN '2012-09-14' when BookId = 1786 then '2012-07-30' when BookID = 1216 then '2013-08-01' ELSE DOP -- This handles any BookID not listed
+END;
+select rand();
+select * from BookDetailsOne order by BookName desc;
+select upper(BookName) from BookDetailsOne;
+select rand()*2;
+select * from BookDetailsOne where BookName like '%l' order by BookPrice;
+select BookType, max(BookPrice) as maxPrice from BookDetailsOne group by BookType; 
+select BookType, avg (BookPrice) as avgPrice from BookDetailsOne group by BookType;
+select BookType, max(BookPrice) as maxPrice from BookDetailsOne group by BookType order by maxPrice; 
+_________________________________________________________
+create table Employee(emp_name varchar(50),emp_id int(10),doj date,empsal decimal(7,2),emphikesal decimal(7,2));
+alter table Employee add column empcity varchar(20);
+desc Employee;
+insert into Employee(emp_name,emp_id,doj,empsal,emphikesal,empcity)
+values('a',111,'2025-03-25',35000.45,1000.2,"pune"),
+('b',112,'2025-03-26',45000.45,1100.2,"thane"),
+('c',113,'2025-03-27',25000.45,1350.2,"Hyd"),
+('d',114,'2025-03-28',40000.45,1220.2,"mumbai"),
+('e',115,'2025-03-25',35000.45,1450.2,"pune"),
+('f',116,'2025-04-01',50000.45,1200.2,"banglore"),
+('g',117,'2025-04-01',45000.45,2200.2,"thane"),
+('h',118,'2025-03-25',35000.45,1100.2,"chennai"),
+('i',119,'2025-03-27',50000.45,3500.2,"bangalore"),
+('j',120,'2025-03-27',35000.45,1000.2,"chennai");
+select * from Employee;
+select * from Employee where empsal = (select max(empsal) from Employee);
+select count(*) from Employee where empsal<40000.45;
+select doj from Employee where empcity="pune";
+SELECT SUM(empsal + emphikesal) AS total_salary_after_hike FROM Employee;
+SET SQL_SAFE_UPDATES = 0; 
+UPDATE Employee
+SET empcity = 'banglore'
+WHERE emp_id=119;
+select emp_name, empsal from Employee where empcity="banglore";
+select avg(empsal) from Employee;
+select * from Employee limit 3;
+select * from Employee where emp_name like "a%";
+select * from Employee where empcity != "banglore";
+select * from Employee where empcity = "pune" or empcity = "banglore";
+update Employee set empsal=empsal*1.10;
+select * from Employee;
+select ascii(emp_name) as codehchar from Employee;
+select char_length("SQL Class") as lengthofstring;
+SELECT CONCAT("SQL ", "Tutorial ", "is ", "fun!") AS ConcatenatedString;
+SELECT CONCAT_WS("-", "SQL", "Tutorial", "is", "fun!") AS ConcatenatedString;
+
+SELECT INSERT("W3Schools.com", 1, 9, "Example");
+SELECT INSTR("W3Schools.com", "3") AS MatchPosition;
+SELECT LCASE("SQL Tutorial is FUN!");
+
+SELECT LOWER("SQL Tutorial is FUN!");
+SELECT LTRIM("     SQL Tutorial") AS LeftTrimmedString;
+SELECT MID("SQL Tutorial", 5, 3) AS ExtractString;
+
+SELECT LOCATE("3", "W3Schools.com") AS MatchPosition;
+SELECT MID("SQL Tutorial", 5, 3) AS ExtractString;
+SELECT POW(4, 2);
+SELECT RAND();
+SELECT ROUND(135.375, 2);
+SELECT SQRT(64);
+SELECT TRUNCATE(135.375, 2);
+SELECT ADDDATE("2017-06-15", INTERVAL 10 DAY);
+SELECT ADDTIME("2017-06-15 09:34:21", "2");
+SELECT CURRENT_DATE();
+select adddate(doj,interval 4 day) from Employee;
+select subdate(doj, interval 4 day) from Employee;
+SELECT ROUND(empsal,2) from Employee;
+select * from Employee order by empsal;
+
